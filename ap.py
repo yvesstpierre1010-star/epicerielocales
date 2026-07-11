@@ -8,12 +8,47 @@ st.set_page_config(page_title="Campagne Serge Bonin - Optimiseur Terrain", layou
 st.title("📍 Suivi des distributions - Épiceries Chutes-de-la-Chaudière")
 st.write("Optimisez la distribution des cartes électorales de Serge Bonin basé sur l'affluence réelle.")
 
-# 1. Chargement dynamique du fichier CSV généré
+# 1. Données incluses directement dans le code pour éviter toute erreur de fichier externe !
 @st.cache_data
 def load_data():
-    return pd.read_csv("epiceries_chutes_chaudiere.csv")
+    data = {
+        'nom': [
+            'Maxi Saint-Nicolas', 
+            'IGA Extra Famille Rousseau', 
+            'Walmart Supercentre Saint-Nicolas', 
+            'Metro Plus Charny', 
+            'Metro Plus Laroche St-Étienne', 
+            'Super C St-Jean-Chrysostome',
+            'Épicerie Dumond (Charny)'
+        ],
+        'adresse': [
+            '1235 Avenue De la Concorde, Lévis, QC G7A 4X6',
+            '1855 Route des Rivières, Lévis, QC G7A 4X8',
+            '1200 Route des Rivières, Lévis, QC G7A 4R8',
+            '3333 Chemin de Charny, Lévis, QC G6X 3R7',
+            '3045 Route Lagueux, suite 100, Lévis, QC G6J 1K6',
+            '820 Avenue Taniata, Lévis, QC G6Z 2E1',
+            '2390 Chemin de Charny, Lévis, QC G6X 2R1'
+        ],
+        'secteur': [
+            'Saint-Nicolas', 'Saint-Nicolas', 'Saint-Nicolas', 
+            'Charny', 'Saint-Étienne-de-Lauzon', 'Saint-Jean-Chrysostome', 'Charny'
+        ],
+        'latitude': [46.7022, 46.6942, 46.7001, 46.7150, 46.6578, 46.7331, 46.7051],
+        'longitude': [-71.3411, -71.3533, -71.3425, -71.2580, -71.4022, -71.1892, -71.2621],
+        'meilleur_creneau': [
+            'Vendredi 16h00-18h30 / Samedi 11h00-14h00',
+            'Vendredi 15h30-18h00 / Samedi 10h30-13h30',
+            'Samedi 11h00-15h00 / Dimanche 12h00-15h00',
+            'Jeudi 16h00-18h30 / Samedi 10h00-13h00',
+            'Vendredi 15h00-18h00 / Samedi 09h30-12h30',
+            'Jeudi 16h30-19h00 / Vendredi 15h30-18h30',
+            'Vendredi 16h00-18h00'
+        ],
+        'statut': ['À faire', 'À faire', 'À faire', 'À faire', 'À faire', 'À faire', 'À faire']
+    }
+    return pd.DataFrame(data)
 
-# Initialisation des données dans la session Streamlit pour permettre la modification dynamique
 if 'df' not in st.session_state:
     st.session_state.df = load_data()
 
@@ -66,5 +101,4 @@ for idx, row in df.iterrows():
         icon=folium.Icon(color=icon_color, icon='shopping-cart', prefix='fa')
     ).add_to(m)
 
-# Rendu cartographique
 st_folium(m, width="100%", height=500)
