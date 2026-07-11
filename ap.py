@@ -7,7 +7,7 @@ import os
 st.set_page_config(page_title="Campagne Serge Bonin - Optimiseur Terrain", layout="wide")
 
 st.title("📍 Suivi des distributions - Épiceries Chutes-de-la-Chaudière")
-st.write("Optimisez la distribution des cartes électorales de Serge Bonin et accumulez les résultats.")
+st.write("Optimisez la distribution des cartes électorales et accumulez les résultats.")
 
 # Fichier de sauvegarde locale sur le serveur pour partager les données entre bénévoles
 DATA_FILE = "sauvegarde_distribution.csv"
